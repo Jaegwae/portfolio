@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-// 브라우저 내장 PDF 뷰어의 불필요한 UI(툴바/사이드바 등)를 최소화하기 위해
-// 해시 파라미터를 붙여 iframe URL을 만든다.
-const addPdfViewParam = (path) => `${path}#view=FitH&toolbar=0&navpanes=0&scrollbar=0`;
+// 브라우저 내장 PDF 뷰어의 불필요한 UI(툴바/사이드바 등)를 최소화한다.
+// Safari에서 FitH/scrollbar 옵션이 레이아웃을 깨뜨릴 수 있어 최소 파라미터만 유지한다.
+const addPdfViewParam = (path) => `${path}#toolbar=0&navpanes=0`;
 
 function DocumentModal({ document, onClose }) {
   // document 객체 유무 자체를 모달 열림 상태로 사용한다.
