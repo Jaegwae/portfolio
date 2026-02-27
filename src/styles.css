@@ -351,6 +351,82 @@ main {
   line-height: 1.72;
 }
 
+.records-career-card {
+  grid-column: 1 / -1;
+  gap: 0.9rem;
+}
+
+.career-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.career-header h3 {
+  margin: 0;
+}
+
+.career-emphasis {
+  border: 1px solid var(--line-strong);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.22rem 0.5rem;
+}
+
+.career-item-block {
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+  display: grid;
+  gap: 0.58rem;
+}
+
+.career-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.career-item-top h4 {
+  margin: 0;
+  font-size: 1.16rem;
+}
+
+.career-item-top p {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+.career-item-meta {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.career-paragraphs {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.career-paragraphs p {
+  margin: 0;
+  color: var(--panel-subtle-text);
+  line-height: 1.68;
+  font-size: 0.9rem;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
 .portfolio-header {
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.8rem;

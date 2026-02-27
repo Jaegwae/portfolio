@@ -83,7 +83,7 @@ function App() {
           onOpenDocument={openDocument}
         />
         {/* 자기소개 본문 */}
-        <RecordsSection profileContent={PROFILE_CONTENT} />
+        <RecordsSection profileContent={PROFILE_CONTENT} onOpenDocument={openDocument} />
         {/* 프로젝트 목록 + 상세 케이스 모달 */}
         <PortfolioGridSection items={PORTFOLIO_ITEMS} onOpenDocument={openDocument} />
       </main>
