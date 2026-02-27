@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 // 브라우저 내장 PDF 뷰어의 불필요한 UI(툴바/사이드바 등)를 최소화하기 위해
 // 해시 파라미터를 붙여 iframe URL을 만든다.
 const addPdfViewParam = (path) => `${path}#view=FitH&toolbar=0&navpanes=0&scrollbar=0`;
@@ -9,6 +11,12 @@ function DocumentModal({ document, onClose }) {
   const isImageDocument = document?.type === "image";
   // 모달이 닫힌 상태에서는 안전하게 빈 페이지를 사용한다.
   const iframeSrc = document && !isImageDocument ? addPdfViewParam(document.path) : "about:blank";
+  // 이미지/PDF를 불러오는 동안 로딩 UI를 표시해 빈 화면처럼 보이지 않게 한다.
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(Boolean(document));
+  }, [document]);
 
   return (
     <div
@@ -29,6 +37,11 @@ function DocumentModal({ document, onClose }) {
             </button>
           </div>
         </div>
+        {isLoading && (
+          <div className="modal-loading">
+            <p>문서를 불러오는 중...</p>
+          </div>
+        )}
         {isImageDocument ? (
           <div className="modal-image-wrap">
             <img
@@ -38,10 +51,12 @@ function DocumentModal({ document, onClose }) {
               // 드래그 저장/우클릭을 최소화해 원본 다운로드 노출을 줄인다.
               draggable="false"
               onContextMenu={(event) => event.preventDefault()}
+              onLoad={() => setIsLoading(false)}
+              onError={() => setIsLoading(false)}
             />
           </div>
         ) : (
-          <iframe title="Document Viewer" src={iframeSrc} />
+          <iframe title="Document Viewer" src={iframeSrc} onLoad={() => setIsLoading(false)} />
         )}
       </div>
     </div>
