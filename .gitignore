@@ -4,3 +4,4 @@ dist
 
 .tmp/
 .tmp_resume_pages/
+.firebase/
