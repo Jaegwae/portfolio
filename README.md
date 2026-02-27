@@ -126,6 +126,9 @@ git push -u origin main
 
 이 프로젝트는 정적 사이트라 Firebase Hosting에 바로 배포 가능합니다.
 
+현재 배포 주소:
+- [https://portfolio-a9b1d.web.app](https://portfolio-a9b1d.web.app)
+
 1) Firebase CLI 설치
 ```bash
 npm install -g firebase-tools
@@ -160,4 +163,3 @@ firebase deploy
 - 포트폴리오 PDF 파일 용량이 커서 저장소가 빠르게 커질 수 있습니다.
 - 필요하면 PDF 압축본/웹용 버전으로 교체해 로딩 속도를 개선하세요.
 - 썸네일은 가급적 동일 해상도/비율(16:9)로 맞추면 카드 레이아웃이 안정적입니다.
-
