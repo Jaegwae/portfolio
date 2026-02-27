@@ -1,22 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 
 // 브라우저 내장 PDF 뷰어의 불필요한 UI(툴바/사이드바 등)를 최소화한다.
 // Safari에서 FitH/scrollbar 옵션이 레이아웃을 깨뜨릴 수 있어 최소 파라미터만 유지한다.
-const addPdfViewParam = (path) => `${path}?v=20260228#toolbar=0&navpanes=0`;
+// iframe 내장 뷰어를 사용하지 않고 pdf.js로 직접 렌더링해 브라우저별 깨짐을 방지한다.
+pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
 function DocumentModal({ document, onClose }) {
   // document 객체 유무 자체를 모달 열림 상태로 사용한다.
   const modalOpen = Boolean(document);
-  // type이 image면 <img>, 아니면 <iframe pdf> 렌더링.
+  // type이 image면 <img>, 아니면 pdf.js 기반 캔버스로 렌더링.
   const isImageDocument = document?.type === "image";
-  // 모달이 닫힌 상태에서는 안전하게 빈 페이지를 사용한다.
-  const iframeSrc = document && !isImageDocument ? addPdfViewParam(document.path) : "about:blank";
   // 이미지/PDF를 불러오는 동안 로딩 UI를 표시해 빈 화면처럼 보이지 않게 한다.
   const [isLoading, setIsLoading] = useState(false);
+  // PDF 페이지네이션 상태.
+  const [numPages, setNumPages] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
+  // 모달 너비에 맞춰 PDF를 반응형 렌더링하기 위한 컨테이너 측정값.
+  const pdfWrapRef = useRef(null);
+  const [pdfWidth, setPdfWidth] = useState(0);
 
   useEffect(() => {
     setIsLoading(Boolean(document));
+    setNumPages(0);
+    setPageNumber(1);
   }, [document]);
+
+  useEffect(() => {
+    if (!modalOpen || isImageDocument) return undefined;
+    if (!pdfWrapRef.current) return undefined;
+
+    const updateWidth = () => {
+      const next = Math.floor(pdfWrapRef.current.clientWidth - 24);
+      setPdfWidth(Math.max(320, next));
+    };
+
+    updateWidth();
+    if (typeof ResizeObserver === "undefined") return undefined;
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(pdfWrapRef.current);
+    return () => observer.disconnect();
+  }, [modalOpen, isImageDocument]);
 
   return (
     <div
@@ -32,6 +56,29 @@ function DocumentModal({ document, onClose }) {
         <div className="modal-head">
           <h3 id="docModalTitle">{document?.title || "문서 보기"}</h3>
           <div className="modal-actions">
+            {!isImageDocument && numPages > 0 && (
+              <div className="pdf-page-controls">
+                <button
+                  type="button"
+                  className="pdf-nav-btn"
+                  onClick={() => setPageNumber((prev) => Math.max(1, prev - 1))}
+                  disabled={pageNumber <= 1}
+                >
+                  이전
+                </button>
+                <span className="pdf-page-status">
+                  {pageNumber} / {numPages}
+                </span>
+                <button
+                  type="button"
+                  className="pdf-nav-btn"
+                  onClick={() => setPageNumber((prev) => Math.min(numPages, prev + 1))}
+                  disabled={pageNumber >= numPages}
+                >
+                  다음
+                </button>
+              </div>
+            )}
             <button className="icon-btn" type="button" aria-label="문서 닫기" onClick={onClose}>
               ×
             </button>
@@ -56,7 +103,21 @@ function DocumentModal({ document, onClose }) {
             />
           </div>
         ) : (
-          <iframe title="Document Viewer" src={iframeSrc} onLoad={() => setIsLoading(false)} />
+          <div className="modal-pdf-wrap" ref={pdfWrapRef}>
+            <Document
+              file={document?.path || ""}
+              loading=""
+              onLoadSuccess={({ numPages: loadedPages }) => {
+                setNumPages(loadedPages);
+                setPageNumber(1);
+                setIsLoading(false);
+              }}
+              onLoadError={() => setIsLoading(false)}
+              onSourceError={() => setIsLoading(false)}
+            >
+              <Page pageNumber={pageNumber} width={pdfWidth || 820} renderTextLayer={false} renderAnnotationLayer={false} />
+            </Document>
+          </div>
         )}
       </div>
     </div>
