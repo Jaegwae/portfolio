@@ -132,11 +132,13 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
               <p className="certificate-badge">{militaryRecord.title}</p>
               <h4 className="military-status">{militaryRecord.status}</h4>
               <p className="military-period">복무기간: {militaryRecord.period}</p>
-              <ul className="military-note-list">
-                {militaryRecord.notes.map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
+              {militaryRecord.notes?.length > 0 && (
+                <ul className="military-note-list">
+                  {militaryRecord.notes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ul>
+              )}
               <div className="action-row">
                 <button
                   className="secondary-btn brutal-btn-light"

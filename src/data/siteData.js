@@ -5,7 +5,7 @@ export const PROFILE = {
   displayName: "김재관",
   role: "PRODUCT-MINDED PROBLEM SOLVER",
   summary:
-    "현장의 비효율을 구조화하고 데이터 기반 자동화로 실제 운영 성과를 만드는 개발자입니다. 운영 개선부터 AI 모델 서비스화까지 직접 설계하고 구현해 사용자 가치로 연결해왔습니다.",
+    "현장의 비효율을 구조화하고 데이터 기반 자동화로 실제 운영 성과를 만드는 기획자입니다. 운영 개선부터 AI 모델 서비스화까지 직접 설계하고 구현해 사용자 가치로 연결해왔습니다.",
   details: [
     { label: "생년월일", value: "2000.03.30" },
     { label: "이메일", value: "kimjk4031@naver.com" },
@@ -37,7 +37,7 @@ export const MILITARY_RECORD = {
   title: "병역",
   status: "공군 병장 만기제대",
   period: "2020.10.12 ~ 2022.07.11",
-  notes: ["병역 이행 증빙은 병적증명서 원문에서 확인할 수 있습니다."],
+  notes: [],
   document: {
     title: "병적증명서",
     path: "/assets/records/military-service-certificate.jpg",

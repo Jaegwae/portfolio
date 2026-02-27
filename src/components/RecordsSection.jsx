@@ -9,7 +9,6 @@ function RecordsSection({ profileContent }) {
           <br />
           <span>RECORDS_</span>
         </h2>
-        <p>자기소개를 본문으로 확인할 수 있습니다.</p>
       </header>
 
       <div className="records-grid">
