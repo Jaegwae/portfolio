@@ -1,6 +1,10 @@
 function ResumeSection({ profile, experience, stack, certificates, militaryRecord, onOpenDocument }) {
+  // 이름이 2단 이상(영문 이름 등)일 때 줄바꿈 처리를 위한 분리.
   const [firstName, ...restNames] = profile.displayName.split(" ");
   const hasRestName = restNames.join(" ").trim().length > 0;
+
+  // YYYY.MM.DD 형식의 생년월일을 받아 "만 나이"를 계산해 함께 표시한다.
+  // 잘못된 포맷은 그대로 반환해 데이터 손상을 방지한다.
   const formatBirthDateWithAge = (birthDateText) => {
     const matched = birthDateText.match(/^(\d{4})\.(\d{2})\.(\d{2})$/);
     if (!matched) return birthDateText;
@@ -22,6 +26,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
   return (
     <section id="landing" className="resume-shell">
       <div className="resume-layout">
+        {/* 좌측: 프로필 고정 정보 블록 */}
         <aside className="resume-left-pane fx-reveal" style={{ animationDelay: "60ms" }}>
           <div className="portrait-wrap">
             <img src="/assets/profile.jpg" alt="김재관 프로필 사진" />
@@ -40,6 +45,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
           <p className="resume-role">// {profile.role}</p>
           <p className="resume-summary">{profile.summary}</p>
           <dl className="resume-meta">
+            {/* 기본 메타 정보 렌더링: 생년월일만 만 나이 후처리 */}
             {profile.details.map((detail) => (
               <div key={detail.label} className="resume-meta-row">
                 <dt>{detail.label}</dt>
@@ -50,6 +56,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
           <p className="resume-signature">{profile.name} · SEOUL, KR</p>
         </aside>
 
+        {/* 우측: 학력/스택/자격증 + 병역 블록 */}
         <div className="resume-right-pane">
           <article id="education" className="resume-panel fx-reveal" style={{ animationDelay: "120ms" }}>
             <h3 className="resume-panel-title">
@@ -57,6 +64,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
               EDUCATION
             </h3>
             <div className="resume-timeline">
+              {/* 학력 타임라인 */}
               {experience.map((item) => (
                 <div key={item.title} className="timeline-item">
                   <span className="timeline-dot" />
@@ -77,6 +85,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
               TECH STACK
             </h3>
             <div className="stack-wrap">
+              {/* 기술 스택 배지 */}
               {stack.map((item) => (
                 <span key={item.name} className="stack-chip">
                   <i className="stack-dot" style={{ backgroundColor: item.color }} />
@@ -92,6 +101,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
               CERTIFICATES
             </h3>
             <div className="certificate-grid">
+              {/* 자격증 카드: 문서는 이미지로 모달 열기 */}
               {certificates.map((certificate, index) => (
                 <article
                   key={certificate.name}
@@ -107,6 +117,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
                     <button
                       className="secondary-btn brutal-btn-light"
                       type="button"
+                      // type을 함께 넘겨서 DocumentModal이 이미지/PDF 모드를 분기한다.
                       onClick={() => onOpenDocument(certificate.title, certificate.path, certificate.type)}
                     >
                       합격증 보기
@@ -115,6 +126,8 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
                 </article>
               ))}
             </div>
+
+            {/* 병역 정보는 자격증 아래에 별도 카드로 배치 */}
             <article className="military-record-wrap" id="military-service">
               <p className="certificate-badge">{militaryRecord.title}</p>
               <h4 className="military-status">{militaryRecord.status}</h4>

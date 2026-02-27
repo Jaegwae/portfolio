@@ -1,3 +1,5 @@
+// ===== Profile 영역 =====
+// ResumeSection 좌측 프로필 카드에서 사용하는 기본 개인 정보.
 export const PROFILE = {
   name: "김재관",
   displayName: "김재관",
@@ -11,6 +13,8 @@ export const PROFILE = {
   ]
 };
 
+// ===== 자기소개 본문 =====
+// RecordsSection에서 "PROFILE RECORDS_" 카드의 본문으로 렌더링된다.
 export const PROFILE_CONTENT = {
   intro: {
     title: "자기소개",
@@ -26,6 +30,9 @@ export const PROFILE_CONTENT = {
   }
 };
 
+// ===== 병역 정보 =====
+// ResumeSection의 CERTIFICATES 하단 카드에서 표시된다.
+// document.type을 image로 지정하여 이미지 모달로만 열리게 구성.
 export const MILITARY_RECORD = {
   title: "병역",
   status: "공군 병장 만기제대",
@@ -38,6 +45,8 @@ export const MILITARY_RECORD = {
   }
 };
 
+// ===== 학력 =====
+// EDUCATION 타임라인 순서대로 렌더링된다.
 export const EXPERIENCE = [
   {
     title: "국립공주대학교",
@@ -53,6 +62,8 @@ export const EXPERIENCE = [
   }
 ];
 
+// ===== 기술 스택 =====
+// color 값은 스택 점(dot) 색상으로 사용된다.
 export const STACK = [
   { name: "Python", color: "#fbbf24" },
   { name: "React", color: "#60a5fa" },
@@ -65,6 +76,8 @@ export const STACK = [
   { name: "AWS EC2", color: "#f59e0b" }
 ];
 
+// ===== 자격증 =====
+// type을 image로 통일해서 "합격증 보기"를 이미지 모달로 열도록 설정.
 export const CERTIFICATES = [
   {
     badge: "국가기술자격",
@@ -92,6 +105,9 @@ export const CERTIFICATES = [
   }
 ];
 
+// ===== 포트폴리오 프로젝트 =====
+// - pdfPath: "PDF 보기 / 다운로드"에서 사용
+// - completionCertificate: 특정 프로젝트에서만 추가 증빙(수료증) 버튼 노출
 export const PORTFOLIO_ITEMS = [
   {
     id: "plimo",

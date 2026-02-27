@@ -1,10 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 
 function PortfolioGridSection({ items, onOpenDocument }) {
+  // 현재 선택된 카테고리 필터.
   const [category, setCategory] = useState("All");
+  // 상세 케이스 모달 상태. null이면 닫힘.
   const [selectedItem, setSelectedItem] = useState(null);
+
+  // 썸네일 규칙:
+  // /items/xxx.pdf -> /thumbs/xxx.jpg
+  // 포트폴리오 카드/상세 미디어를 동일한 소스 규칙으로 재사용한다.
   const thumbnailSrc = (pdfPath) => pdfPath.replace("/items/", "/thumbs/").replace(/\.pdf$/i, ".jpg");
 
+  // 상세 모달이 열리면 배경 스크롤 잠금.
+  // 모달 닫힘/언마운트 시 원래 값으로 복원한다.
   useEffect(() => {
     if (!selectedItem) return undefined;
     const prev = document.body.style.overflow;
@@ -14,8 +22,11 @@ function PortfolioGridSection({ items, onOpenDocument }) {
     };
   }, [selectedItem]);
 
+  // 버튼 라인업용 카테고리 목록 생성.
+  // 데이터에서 중복 제거 후 앞에 "All"을 붙인다.
   const categories = useMemo(() => ["All", ...Array.from(new Set(items.map((item) => item.category)))], [items]);
 
+  // 현재 카테고리에 맞는 카드 목록.
   const filteredItems = useMemo(() => {
     if (category === "All") return items;
     return items.filter((item) => item.category === category);
@@ -44,8 +55,10 @@ function PortfolioGridSection({ items, onOpenDocument }) {
       </header>
 
       <div className="portfolio-grid">
+        {/* 카드 리스트 */}
         {filteredItems.map((item, index) => (
           <article key={item.id} className="portfolio-card fx-reveal" style={{ animationDelay: `${index * 70}ms` }}>
+            {/* 썸네일 클릭 시 상세 모달 오픈 */}
             <button type="button" className="portfolio-thumb-wrap" onClick={() => setSelectedItem(item)}>
               <img
                 src={thumbnailSrc(item.pdfPath)}
@@ -71,6 +84,7 @@ function PortfolioGridSection({ items, onOpenDocument }) {
         className={`modal ${selectedItem ? "open" : ""}`}
         aria-hidden={!selectedItem}
         onClick={(event) => {
+          // overlay 클릭 닫기
           if (event.target === event.currentTarget) setSelectedItem(null);
         }}
       >
@@ -121,6 +135,7 @@ function PortfolioGridSection({ items, onOpenDocument }) {
                       className="primary-btn brutal-btn case-action-btn"
                       type="button"
                       onClick={() => {
+                        // PDF 원문은 공용 문서 모달에서 연다.
                         onOpenDocument(selectedItem.title, selectedItem.pdfPath);
                         setSelectedItem(null);
                       }}
@@ -135,6 +150,8 @@ function PortfolioGridSection({ items, onOpenDocument }) {
                         className="secondary-btn brutal-btn-light case-action-btn"
                         type="button"
                         onClick={() => {
+                          // 특정 프로젝트(높이 예측 모델)에만 수료증 버튼이 노출된다.
+                          // 수료증은 이미지 타입으로 열어 다운로드 UI를 최소화한다.
                           onOpenDocument(
                             selectedItem.completionCertificate.title,
                             selectedItem.completionCertificate.path,
