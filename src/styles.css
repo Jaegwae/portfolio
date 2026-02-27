@@ -1208,30 +1208,8 @@ main {
   gap: 0.5rem;
 }
 
-.pdf-page-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.pdf-nav-btn {
-  height: 2rem;
-  border: 1px solid #d9e0ea;
-  background: #fff;
-  color: #1f2937;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  padding: 0 0.55rem;
-  cursor: pointer;
-}
-
-.pdf-nav-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
 .pdf-page-status {
-  min-width: 4rem;
+  min-width: 5rem;
   text-align: center;
   color: #475569;
   font-family: var(--font-mono);
@@ -1291,13 +1269,16 @@ iframe {
 }
 
 .modal-pdf-wrap .react-pdf__Document {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+  align-content: start;
   padding-bottom: 1rem;
 }
 
 .modal-pdf-wrap .react-pdf__Page {
   box-shadow: 0 8px 28px rgba(15, 23, 42, 0.2);
+  background: #fff;
 }
 
 .modal-pdf-wrap .react-pdf__Page canvas {

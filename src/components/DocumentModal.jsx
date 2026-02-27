@@ -13,9 +13,8 @@ function DocumentModal({ document, onClose }) {
   const isImageDocument = document?.type === "image";
   // 이미지/PDF를 불러오는 동안 로딩 UI를 표시해 빈 화면처럼 보이지 않게 한다.
   const [isLoading, setIsLoading] = useState(false);
-  // PDF 페이지네이션 상태.
+  // PDF 전체 페이지 수.
   const [numPages, setNumPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
   // 모달 너비에 맞춰 PDF를 반응형 렌더링하기 위한 컨테이너 측정값.
   const pdfWrapRef = useRef(null);
   const [pdfWidth, setPdfWidth] = useState(0);
@@ -23,7 +22,6 @@ function DocumentModal({ document, onClose }) {
   useEffect(() => {
     setIsLoading(Boolean(document));
     setNumPages(0);
-    setPageNumber(1);
   }, [document]);
 
   useEffect(() => {
@@ -56,29 +54,7 @@ function DocumentModal({ document, onClose }) {
         <div className="modal-head">
           <h3 id="docModalTitle">{document?.title || "문서 보기"}</h3>
           <div className="modal-actions">
-            {!isImageDocument && numPages > 0 && (
-              <div className="pdf-page-controls">
-                <button
-                  type="button"
-                  className="pdf-nav-btn"
-                  onClick={() => setPageNumber((prev) => Math.max(1, prev - 1))}
-                  disabled={pageNumber <= 1}
-                >
-                  이전
-                </button>
-                <span className="pdf-page-status">
-                  {pageNumber} / {numPages}
-                </span>
-                <button
-                  type="button"
-                  className="pdf-nav-btn"
-                  onClick={() => setPageNumber((prev) => Math.min(numPages, prev + 1))}
-                  disabled={pageNumber >= numPages}
-                >
-                  다음
-                </button>
-              </div>
-            )}
+            {!isImageDocument && numPages > 0 && <span className="pdf-page-status">총 {numPages}페이지</span>}
             <button className="icon-btn" type="button" aria-label="문서 닫기" onClick={onClose}>
               ×
             </button>
@@ -109,13 +85,20 @@ function DocumentModal({ document, onClose }) {
               loading=""
               onLoadSuccess={({ numPages: loadedPages }) => {
                 setNumPages(loadedPages);
-                setPageNumber(1);
                 setIsLoading(false);
               }}
               onLoadError={() => setIsLoading(false)}
               onSourceError={() => setIsLoading(false)}
             >
-              <Page pageNumber={pageNumber} width={pdfWidth || 820} renderTextLayer={false} renderAnnotationLayer={false} />
+              {Array.from({ length: numPages }, (_, index) => (
+                <Page
+                  key={`pdf-page-${index + 1}`}
+                  pageNumber={index + 1}
+                  width={pdfWidth || 820}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                />
+              ))}
             </Document>
           </div>
         )}
