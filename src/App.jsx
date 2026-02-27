@@ -57,8 +57,15 @@ function App() {
   }, [modalOpen]);
 
   // 섹션 컴포넌트에서 문서 열기 동작을 공통으로 쓰기 위한 래퍼.
-  // type 기본값은 pdf이며, 이미지 문서는 명시적으로 "image"를 넘긴다.
-  const openDocument = (title, path, type = "pdf") => setOpenedDocument({ title, path, type });
+  // PDF는 새 탭으로 열어 브라우저별 모달 렌더링 이슈를 피하고,
+  // 이미지 문서만 현재 페이지 모달에서 표시한다.
+  const openDocument = (title, path, type = "pdf") => {
+    if (type !== "image") {
+      window.open(path, "_blank", "noopener,noreferrer");
+      return;
+    }
+    setOpenedDocument({ title, path, type });
+  };
 
   return (
     <>
@@ -88,7 +95,7 @@ function App() {
         <PortfolioGridSection items={PORTFOLIO_ITEMS} onOpenDocument={openDocument} />
       </main>
 
-      {/* PDF/이미지 공용 뷰어 모달 */}
+      {/* 이미지 문서 뷰어 모달 */}
       <DocumentModal document={openedDocument} onClose={() => setOpenedDocument(null)} />
     </>
   );
