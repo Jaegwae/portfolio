@@ -95,6 +95,7 @@ function DocumentModal({ document, onClose }) {
                   key={`pdf-page-${index + 1}`}
                   pageNumber={index + 1}
                   width={pdfWidth || 820}
+                  renderMode="svg"
                   renderTextLayer={false}
                   renderAnnotationLayer={false}
                 />
