@@ -1122,7 +1122,7 @@ main {
 }
 
 .military-record-wrap {
-  margin-top: 0.65rem;
+  margin-top: 0;
   border: 1px solid var(--line-strong);
   background: var(--surface-2);
   padding: 0.74rem;

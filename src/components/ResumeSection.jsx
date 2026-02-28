@@ -56,7 +56,7 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
           <p className="resume-signature">{profile.name} · SEOUL, KR</p>
         </aside>
 
-        {/* 우측: 학력/스택/자격증 + 병역 블록 */}
+        {/* 우측: 학력/스택/자격증/병역 블록 */}
         <div className="resume-right-pane">
           <article id="education" className="resume-panel fx-reveal" style={{ animationDelay: "120ms" }}>
             <h3 className="resume-panel-title">
@@ -126,9 +126,14 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
                 </article>
               ))}
             </div>
+          </article>
 
-            {/* 병역 정보는 자격증 아래에 별도 카드로 배치 */}
-            <article className="military-record-wrap" id="military-service">
+          <article id="military-service" className="resume-panel fx-reveal" style={{ animationDelay: "300ms" }}>
+            <h3 className="resume-panel-title">
+              <span className="title-bar" />
+              MILITARY SERVICE
+            </h3>
+            <article className="military-record-wrap">
               <p className="certificate-badge">{militaryRecord.title}</p>
               <h4 className="military-status">{militaryRecord.status}</h4>
               <p className="military-period">복무기간: {militaryRecord.period}</p>
