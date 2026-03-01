@@ -122,7 +122,7 @@ git remote set-url origin https://github.com/<your-id>/<repo>.git
 git push -u origin main
 ```
 
-## 8. Firebase Hosting 배포 (무료 Spark 기준)
+## 8. Firebase Hosting 배포
 
 이 프로젝트는 정적 사이트라 Firebase Hosting에 바로 배포 가능합니다.
 
