@@ -143,6 +143,19 @@ export const CERTIFICATES = [
 // - completionCertificate: 특정 프로젝트에서만 추가 증빙(수료증) 버튼 노출
 export const PORTFOLIO_ITEMS = [
   {
+    id: "mentos",
+    title: "멘토스",
+    subtitle: "멘토 커뮤니티 웹사이트 · 서비스 기획 & 바이브 코딩 프로젝트",
+    category: "Service",
+    tags: ["Community", "Planning", "Web"],
+    year: "2026",
+    pdfPath: "/assets/portfolio/items/mentos.pdf",
+    challenge:
+      "멘토와 참여자 간 상호작용이 흩어지지 않도록, 커뮤니티 경험과 운영 흐름을 하나의 웹 서비스 안에서 설계해야 했습니다.",
+    solution:
+      "서비스 기획 단계에서 핵심 사용자 시나리오를 먼저 정의하고, 바이브 코딩 방식으로 주요 기능을 빠르게 구현하며 화면/기능을 반복 개선했습니다."
+  },
+  {
     id: "plimo",
     title: "Plimo",
     subtitle: "AI 감정분석 기반 음악 추천 서비스",
