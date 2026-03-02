@@ -145,6 +145,16 @@ function PortfolioGridSection({ items, onOpenDocument }) {
                     <a className="secondary-btn brutal-btn-light case-action-btn" href={selectedItem.pdfPath} download>
                       PDF 다운로드
                     </a>
+                    {selectedItem.githubUrl && (
+                      <a
+                        className="secondary-btn brutal-btn-light case-action-btn"
+                        href={selectedItem.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        GitHub 바로가기
+                      </a>
+                    )}
                     {selectedItem.completionCertificate && (
                       <button
                         className="secondary-btn brutal-btn-light case-action-btn"

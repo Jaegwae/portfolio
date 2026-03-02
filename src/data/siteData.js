@@ -150,6 +150,7 @@ export const PORTFOLIO_ITEMS = [
     tags: ["Community", "Planning", "Web"],
     year: "2026",
     pdfPath: "/assets/portfolio/items/mentos.pdf",
+    githubUrl: "https://github.com/Jaegwae/mentor-forum/tree/main/mentor-forum-react",
     challenge:
       "멘토와 참여자 간 상호작용이 흩어지지 않도록, 커뮤니티 경험과 운영 흐름을 하나의 웹 서비스 안에서 설계해야 했습니다.",
     solution:
@@ -163,6 +164,7 @@ export const PORTFOLIO_ITEMS = [
     tags: ["NLP", "Recommendation", "Web"],
     year: "2025",
     pdfPath: "/assets/portfolio/items/plimo.pdf",
+    githubUrl: "https://github.com/Jaegwae/Plimo",
     challenge:
       "사용자의 감정 상태를 텍스트에서 정밀하게 파악하고, 실시간에 가까운 응답 속도로 개인화된 음악 추천을 제공해야 했습니다.",
     solution:
@@ -194,6 +196,7 @@ export const PORTFOLIO_ITEMS = [
     tags: ["Operations", "Automation", "UX"],
     year: "2024",
     pdfPath: "/assets/portfolio/items/guro-fusion-center.pdf",
+    githubUrl: "https://github.com/Jaegwae/mentor-forum",
     challenge:
       "현장 운영 과정의 반복 업무와 정보 비대칭으로 인해 대응 속도와 운영 안정성이 떨어지는 문제가 있었습니다.",
     solution:
