@@ -115,7 +115,7 @@ export const CERTIFICATES = [
   {
     badge: "국가기술자격",
     name: "정보처리기사",
-    lines: ["등록번호: 25202070789B", "합격일: 2025.09.12", "발급기관: 한국산업인력공단"],
+    lines: ["등록번호 : 25202070789B", "합격일 : 2025.09.12", "발급기관 : 한국산업인력공단"],
     title: "정보처리기사 합격 확인증",
     path: "/assets/certificates/images/engineer-information-processing.jpg",
     type: "image"
@@ -123,7 +123,7 @@ export const CERTIFICATES = [
   {
     badge: "국가공인",
     name: "리눅스마스터 2급",
-    lines: ["자격번호: LMS-2502-002509", "합격일: 2025.07.04", "발급기관: 한국정보통신진흥협회"],
+    lines: ["자격번호 : LMS-2502-002509", "합격일 : 2025.07.04", "발급기관 : 한국정보통신진흥협회"],
     title: "리눅스마스터2급 합격증명서",
     path: "/assets/certificates/images/linux-master-level-2.jpg",
     type: "image"
@@ -131,7 +131,7 @@ export const CERTIFICATES = [
   {
     badge: "국가공인",
     name: "SQLD (SQL 개발자)",
-    lines: ["자격번호: SQLD-057006438", "합격일: 2025.06.27", "발급기관: 한국데이터산업진흥원"],
+    lines: ["자격번호 : SQLD-057006438", "합격일 : 2025.06.27", "발급기관 : 한국데이터산업진흥원"],
     title: "SQLD 합격확인증",
     path: "/assets/certificates/images/sqld-pass.jpg",
     type: "image"
@@ -145,7 +145,7 @@ export const TRAINING_CERTIFICATES = [
   {
     badge: "교육수료",
     name: "2025 데이터 크리에이터 캠프",
-    lines: ["주관: 한국지능정보사회진흥원", "기간: 2025.08.13 ~ 2025.09.26"],
+    lines: ["주관 : 한국지능정보사회진흥원", "기간 : 2025.08.13 ~ 2025.09.26"],
     title: "2025 데이터 크리에이터 캠프 수료증",
     path: "/assets/portfolio/certificates/height-prediction-camp-certificate.jpg",
     type: "image"
@@ -153,7 +153,7 @@ export const TRAINING_CERTIFICATES = [
   {
     badge: "교육수료",
     name: "LG AImers 8기",
-    lines: ["주관: LG AI연구원", "기간: 2026.01.02 ~ 2026.02.26"],
+    lines: ["주관 : LG AI연구원", "기간 : 2026.01.02 ~ 2026.02.26"],
     title: "LG AImers 8기 수료증",
     path: "/assets/education/certificates/lg-aimers-8-completion.jpg",
     type: "image"
