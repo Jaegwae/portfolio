@@ -1,4 +1,4 @@
-function ResumeSection({ profile, experience, stack, certificates, militaryRecord, onOpenDocument }) {
+function ResumeSection({ profile, experience, stack, certificates, trainingCertificates, militaryRecord, onOpenDocument }) {
   // 이름이 2단 이상(영문 이름 등)일 때 줄바꿈 처리를 위한 분리.
   const [firstName, ...restNames] = profile.displayName.split(" ");
   const hasRestName = restNames.join(" ").trim().length > 0;
@@ -128,7 +128,38 @@ function ResumeSection({ profile, experience, stack, certificates, militaryRecor
             </div>
           </article>
 
-          <article id="military-service" className="resume-panel fx-reveal" style={{ animationDelay: "300ms" }}>
+          <article id="training" className="resume-panel fx-reveal" style={{ animationDelay: "300ms" }}>
+            <h3 className="resume-panel-title">
+              <span className="title-bar" />
+              TRAINING
+            </h3>
+            <div className="certificate-grid">
+              {trainingCertificates.map((training, index) => (
+                <article
+                  key={training.name}
+                  className="certificate-card fx-reveal"
+                  style={{ animationDelay: `${340 + index * 60}ms` }}
+                >
+                  <p className="certificate-badge">{training.badge}</p>
+                  <h4>{training.name}</h4>
+                  {training.lines.map((line) => (
+                    <p key={`${training.name}-${line}`}>{line}</p>
+                  ))}
+                  <div className="action-row">
+                    <button
+                      className="secondary-btn brutal-btn-light"
+                      type="button"
+                      onClick={() => onOpenDocument(training.title, training.path, training.type)}
+                    >
+                      수료증 보기
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </article>
+
+          <article id="military-service" className="resume-panel fx-reveal" style={{ animationDelay: "360ms" }}>
             <h3 className="resume-panel-title">
               <span className="title-bar" />
               MILITARY SERVICE

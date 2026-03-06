@@ -10,7 +10,8 @@ import {
   PORTFOLIO_ITEMS,
   PROFILE,
   PROFILE_CONTENT,
-  STACK
+  STACK,
+  TRAINING_CERTIFICATES
 } from "./data/siteData";
 
 const THEME_STORAGE_KEY = "portfolio-theme";
@@ -86,6 +87,7 @@ function App() {
           experience={EXPERIENCE}
           stack={STACK}
           certificates={CERTIFICATES}
+          trainingCertificates={TRAINING_CERTIFICATES}
           militaryRecord={MILITARY_RECORD}
           onOpenDocument={openDocument}
         />

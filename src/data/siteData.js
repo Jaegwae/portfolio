@@ -138,6 +138,28 @@ export const CERTIFICATES = [
   }
 ];
 
+// ===== 교육/수료 =====
+// CERTIFICATES 아래 별도 섹션에서 수료 이력을 보여준다.
+// 수료증은 이미지 모달로 열리도록 type을 image로 통일한다.
+export const TRAINING_CERTIFICATES = [
+  {
+    badge: "교육수료",
+    name: "2025 데이터 크리에이터 캠프",
+    lines: ["주관: 한국지능정보사회진흥원", "기간: 2025.08.13 ~ 2025.09.26"],
+    title: "2025 데이터 크리에이터 캠프 수료증",
+    path: "/assets/portfolio/certificates/height-prediction-camp-certificate.jpg",
+    type: "image"
+  },
+  {
+    badge: "교육수료",
+    name: "LG AImers 8기",
+    lines: ["주관: LG AI연구원", "구분: AI 실무 교육 과정"],
+    title: "LG AImers 8기 수료증",
+    path: "/assets/education/certificates/lg-aimers-8-completion.jpg",
+    type: "image"
+  }
+];
+
 // ===== 포트폴리오 프로젝트 =====
 // - pdfPath: "PDF 보기 / 다운로드"에서 사용
 // - completionCertificate: 특정 프로젝트에서만 추가 증빙(수료증) 버튼 노출
