@@ -153,7 +153,7 @@ export const TRAINING_CERTIFICATES = [
   {
     badge: "교육수료",
     name: "LG AImers 8기",
-    lines: ["주관: LG AI연구원", "구분: AI 실무 교육 과정"],
+    lines: ["주관: LG AI연구원", "기간: 2026.01.02 ~ 2026.02.26"],
     title: "LG AImers 8기 수료증",
     path: "/assets/education/certificates/lg-aimers-8-completion.jpg",
     type: "image"
