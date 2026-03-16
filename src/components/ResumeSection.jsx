@@ -140,7 +140,7 @@ function ResumeSection({
           <article id="language-certificate" className="resume-panel fx-reveal" style={{ animationDelay: "300ms" }}>
             <h3 className="resume-panel-title">
               <span className="title-bar" />
-              LANGUAGE TEST
+              LANGUAGE
             </h3>
             <article className="single-record-wrap">
               <p className="certificate-badge">{languageCertificate.badge}</p>

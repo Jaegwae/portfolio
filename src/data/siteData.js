@@ -142,8 +142,8 @@ export const CERTIFICATES = [
 // 자격증 아래 단독 와이드 카드로 노출된다.
 export const LANGUAGE_CERTIFICATE = {
   badge: "어학",
-  name: "TOEIC Speaking IH",
-  lines: ["점수 : 140", "등급 : Intermediate High", "응시일 : 2026.03.14", "유효기간 : 2028.03.14"],
+  name: "TOEIC Speaking",
+  lines: ["점수 : 140", "등급 : Intermediate High (IH)", "응시일 : 2026.03.14", "유효기간 : 2028.03.14"],
   title: "TOEIC Speaking 성적표",
   path: "/assets/language/toeic-speaking-ih.jpg",
   type: "image"
