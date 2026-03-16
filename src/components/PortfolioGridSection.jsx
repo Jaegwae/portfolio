@@ -38,7 +38,7 @@ function PortfolioGridSection({ items, onOpenDocument }) {
         <h2>
           SELECTED
           <br />
-          <span>WORK_</span>
+          <span>PORTFOLIO_</span>
         </h2>
         <div className="portfolio-filters">
           {categories.map((itemCategory) => (
