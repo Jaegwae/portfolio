@@ -1121,7 +1121,7 @@ main {
   text-transform: uppercase;
 }
 
-.military-record-wrap {
+.single-record-wrap {
   margin-top: 0;
   border: 1px solid var(--line-strong);
   background: var(--surface-2);
@@ -1131,17 +1131,23 @@ main {
   transition: border-color 220ms ease;
 }
 
-.military-record-wrap:hover {
+.single-record-wrap:hover {
   border-color: rgba(43, 212, 255, 0.55);
 }
 
-.military-status {
+.single-record-title {
   margin: 0;
   font-size: 1.02rem;
   color: var(--text);
 }
 
-.military-period {
+.single-record-lines {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 0.3rem 0.85rem;
+}
+
+.single-record-line {
   margin: 0;
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -1347,6 +1353,10 @@ iframe {
   }
 
   .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .single-record-lines {
     grid-template-columns: 1fr;
   }
 

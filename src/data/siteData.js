@@ -138,6 +138,17 @@ export const CERTIFICATES = [
   }
 ];
 
+// ===== 어학 성적 =====
+// 자격증 아래 단독 와이드 카드로 노출된다.
+export const LANGUAGE_CERTIFICATE = {
+  badge: "어학",
+  name: "TOEIC Speaking IH",
+  lines: ["점수 : 140", "등급 : Intermediate High", "응시일 : 2026.03.14", "유효기간 : 2028.03.14"],
+  title: "TOEIC Speaking 성적표",
+  path: "/assets/language/toeic-speaking-ih.jpg",
+  type: "image"
+};
+
 // ===== 교육/수료 =====
 // CERTIFICATES 아래 별도 섹션에서 수료 이력을 보여준다.
 // 수료증은 이미지 모달로 열리도록 type을 image로 통일한다.

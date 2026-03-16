@@ -6,6 +6,7 @@ import ResumeSection from "./components/ResumeSection";
 import {
   CERTIFICATES,
   EXPERIENCE,
+  LANGUAGE_CERTIFICATE,
   MILITARY_RECORD,
   PORTFOLIO_ITEMS,
   PROFILE,
@@ -87,6 +88,7 @@ function App() {
           experience={EXPERIENCE}
           stack={STACK}
           certificates={CERTIFICATES}
+          languageCertificate={LANGUAGE_CERTIFICATE}
           trainingCertificates={TRAINING_CERTIFICATES}
           militaryRecord={MILITARY_RECORD}
           onOpenDocument={openDocument}

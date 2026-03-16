@@ -1,4 +1,13 @@
-function ResumeSection({ profile, experience, stack, certificates, trainingCertificates, militaryRecord, onOpenDocument }) {
+function ResumeSection({
+  profile,
+  experience,
+  stack,
+  certificates,
+  languageCertificate,
+  trainingCertificates,
+  militaryRecord,
+  onOpenDocument
+}) {
   // 이름이 2단 이상(영문 이름 등)일 때 줄바꿈 처리를 위한 분리.
   const [firstName, ...restNames] = profile.displayName.split(" ");
   const hasRestName = restNames.join(" ").trim().length > 0;
@@ -128,7 +137,36 @@ function ResumeSection({ profile, experience, stack, certificates, trainingCerti
             </div>
           </article>
 
-          <article id="training" className="resume-panel fx-reveal" style={{ animationDelay: "300ms" }}>
+          <article id="language-certificate" className="resume-panel fx-reveal" style={{ animationDelay: "300ms" }}>
+            <h3 className="resume-panel-title">
+              <span className="title-bar" />
+              LANGUAGE TEST
+            </h3>
+            <article className="single-record-wrap">
+              <p className="certificate-badge">{languageCertificate.badge}</p>
+              <h4 className="single-record-title">{languageCertificate.name}</h4>
+              <div className="single-record-lines">
+                {languageCertificate.lines.map((line) => (
+                  <p key={`${languageCertificate.name}-${line}`} className="single-record-line">
+                    {line}
+                  </p>
+                ))}
+              </div>
+              <div className="action-row">
+                <button
+                  className="secondary-btn brutal-btn-light"
+                  type="button"
+                  onClick={() =>
+                    onOpenDocument(languageCertificate.title, languageCertificate.path, languageCertificate.type)
+                  }
+                >
+                  성적표 보기
+                </button>
+              </div>
+            </article>
+          </article>
+
+          <article id="training" className="resume-panel fx-reveal" style={{ animationDelay: "360ms" }}>
             <h3 className="resume-panel-title">
               <span className="title-bar" />
               TRAINING
@@ -159,15 +197,15 @@ function ResumeSection({ profile, experience, stack, certificates, trainingCerti
             </div>
           </article>
 
-          <article id="military-service" className="resume-panel fx-reveal" style={{ animationDelay: "360ms" }}>
+          <article id="military-service" className="resume-panel fx-reveal" style={{ animationDelay: "420ms" }}>
             <h3 className="resume-panel-title">
               <span className="title-bar" />
               MILITARY SERVICE
             </h3>
-            <article className="military-record-wrap">
+            <article className="single-record-wrap">
               <p className="certificate-badge">{militaryRecord.title}</p>
-              <h4 className="military-status">{militaryRecord.status}</h4>
-              <p className="military-period">복무기간: {militaryRecord.period}</p>
+              <h4 className="single-record-title">{militaryRecord.status}</h4>
+              <p className="single-record-line">복무기간 : {militaryRecord.period}</p>
               {militaryRecord.notes?.length > 0 && (
                 <ul className="military-note-list">
                   {militaryRecord.notes.map((note) => (
