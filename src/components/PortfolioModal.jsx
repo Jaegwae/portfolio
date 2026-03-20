@@ -51,11 +51,7 @@ function PortfolioModal({ item, onClose, onOpenDocument }) {
   const modalMeta = [
     { label: "Category", value: item.category },
     { label: "Year", value: item.year },
-    { label: "Tags", value: item.tags.join(" · ") },
-    {
-      label: "Assets",
-      value: item.completionCertificate ? "PDF + Certificate" : item.githubUrl ? "PDF + GitHub" : "PDF Dossier"
-    }
+    { label: "Tags", value: item.tags.join(" · ") }
   ];
 
   return (
