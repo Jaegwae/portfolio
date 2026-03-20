@@ -90,7 +90,7 @@ export const EXPERIENCE = [
   {
     title: "한세사이버보안고등학교",
     period: "2016.03 — 2019.02",
-    role: "특성화/마이스터고",
+    role: "해킹보안과 · 특성화/마이스터고",
     summary: "졸업"
   }
 ];
@@ -157,6 +157,10 @@ export const TRAINING_CERTIFICATES = [
     badge: "교육수료",
     name: "2025 데이터 크리에이터 캠프",
     lines: ["주관 : 한국지능정보사회진흥원", "기간 : 2025.08.13 ~ 2025.09.26"],
+    activities: [
+      "위성 이미지 기반 굴뚝 탐지와 높이 추정 문제를 팀 프로젝트로 수행했습니다.",
+      "데이터 전처리부터 모델 실험, 결과 정리와 발표까지 이어지는 전체 분석 흐름을 경험했습니다."
+    ],
     title: "2025 데이터 크리에이터 캠프 수료증",
     path: "/assets/portfolio/certificates/height-prediction-camp-certificate.jpg",
     type: "image"
@@ -165,6 +169,10 @@ export const TRAINING_CERTIFICATES = [
     badge: "교육수료",
     name: "LG AImers 8기",
     lines: ["주관 : LG AI연구원", "기간 : 2026.01.02 ~ 2026.02.26"],
+    activities: [
+      "LG EXAONE 모델에 4비트 양자화를 적용해 LLM 경량화를 수행한 실습 과제를 진행했습니다.",
+      "성능과 자원 사용량을 함께 고려하며 모델 최적화 과정을 직접 경험했습니다."
+    ],
     title: "LG AImers 8기 수료증",
     path: "/assets/education/certificates/lg-aimers-8-completion.jpg",
     type: "image"

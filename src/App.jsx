@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DocumentModal from "./components/DocumentModal";
-import PortfolioGridSection from "./components/PortfolioGridSection";
-import RecordsSection from "./components/RecordsSection";
-import ResumeSection from "./components/ResumeSection";
+import PortfolioDesktop from "./components/PortfolioDesktop";
+import PortfolioMobile from "./components/PortfolioMobile";
+import PortfolioModal from "./components/PortfolioModal";
 import {
   CERTIFICATES,
   EXPERIENCE,
@@ -15,58 +15,186 @@ import {
   TRAINING_CERTIFICATES
 } from "./data/siteData";
 
+const MOBILE_BREAKPOINT = 860;
 const THEME_STORAGE_KEY = "portfolio-theme";
 
-const getInitialTheme = () => "light";
+const getInitialTheme = () => {
+  if (typeof window === "undefined") return "light";
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return storedTheme === "dark" ? "dark" : "light";
+};
+
+const getInitialViewportMode = () => {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth <= MOBILE_BREAKPOINT;
+};
+
+const getInternationalAge = (birthDate) => {
+  const matched = birthDate.match(/^(\d{4})\.(\d{2})\.(\d{2})$/);
+  if (!matched) return null;
+
+  const [, year, month, day] = matched.map(Number);
+  const today = new Date();
+  let age = today.getFullYear() - year;
+  const hasHadBirthday =
+    today.getMonth() + 1 > month || (today.getMonth() + 1 === month && today.getDate() >= day);
+
+  if (!hasHadBirthday) {
+    age -= 1;
+  }
+
+  return age;
+};
 
 function App() {
-  // 문서 모달 상태:
-  // - null: 닫힘
-  // - 객체: 열림 (title, path, type)
-  const [openedDocument, setOpenedDocument] = useState(null);
-  // 사이트 전역 테마 상태(다크/라이트)
   const [theme, setTheme] = useState(getInitialTheme);
-  const modalOpen = Boolean(openedDocument);
+  const [isMobile, setIsMobile] = useState(getInitialViewportMode);
+  const [openedDocument, setOpenedDocument] = useState(null);
+  const [selectedPortfolioItem, setSelectedPortfolioItem] = useState(null);
+  const [activeSection, setActiveSection] = useState("home");
 
-  // 모달이 열리면 배경 스크롤을 잠그고, 닫히면 원복한다.
-  // 상세 모달과 문서 모달의 UX 일관성을 위해 body overflow를 직접 제어한다.
+  const modalOpen = Boolean(openedDocument) || Boolean(selectedPortfolioItem);
+
+  const heroDetails = useMemo(
+    () =>
+      PROFILE.details.map((detail) => {
+        if (detail.label !== "생년월일") return detail;
+
+        const age = getInternationalAge(detail.value);
+        return {
+          ...detail,
+          value: age === null ? detail.value : `${detail.value} (만 ${age}세)`
+        };
+      }),
+    []
+  );
+
   useEffect(() => {
-    document.body.style.overflow = modalOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [modalOpen]);
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const handleChange = (event) => setIsMobile(event.matches);
 
-  // html 루트에 data-theme를 적용해 CSS 변수 테마를 전환한다.
-  // 선택한 테마는 localStorage에 저장해 새로고침 후에도 유지한다.
+    setIsMobile(mediaQuery.matches);
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
-  // ESC 키로 문서 모달을 닫을 수 있도록 전역 키 이벤트를 연결한다.
-  // modalOpen이 false일 때는 리스너를 등록하지 않아 불필요한 이벤트를 줄인다.
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = modalOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [modalOpen]);
+
   useEffect(() => {
     if (!modalOpen) return undefined;
 
     const handleEscape = (event) => {
       if (event.key !== "Escape") return;
-      setOpenedDocument(null);
+
+      if (openedDocument) {
+        setOpenedDocument(null);
+        return;
+      }
+
+      setSelectedPortfolioItem(null);
     };
 
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [modalOpen]);
+  }, [modalOpen, openedDocument]);
 
-  // 섹션 컴포넌트에서 문서 열기 동작을 공통으로 쓰기 위한 래퍼.
-  // PDF는 새 탭으로 열어 브라우저별 모달 렌더링 이슈를 피하고,
-  // 이미지 문서만 현재 페이지 모달에서 표시한다.
+  useEffect(() => {
+    let frameId = null;
+
+    const updateActiveSection = () => {
+      frameId = null;
+
+      const sections = Array.from(
+        document.querySelectorAll(".portfolio-section-scroll[data-nav-group]")
+      );
+
+      if (!sections.length) return;
+
+      const offset = isMobile ? 96 : 108;
+      let nextSection = sections[0].dataset.navGroup || "home";
+
+      sections.forEach((section) => {
+        const top = section.getBoundingClientRect().top;
+        if (top - offset <= 0) {
+          nextSection = section.dataset.navGroup || nextSection;
+        }
+      });
+
+      setActiveSection(nextSection);
+    };
+
+    const requestUpdate = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    requestUpdate();
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, [isMobile]);
+
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  };
+
   const openDocument = (title, path, type = "pdf") => {
     if (type !== "image") {
       window.open(path, "_blank", "noopener,noreferrer");
       return;
     }
+
     setOpenedDocument({ title, path, type });
+  };
+
+  const layoutProps = {
+    profile: PROFILE,
+    heroDetails,
+    intro: PROFILE_CONTENT.intro,
+    career: PROFILE_CONTENT.career,
+    education: EXPERIENCE,
+    stack: STACK,
+    certifications: CERTIFICATES,
+    languageCertificate: LANGUAGE_CERTIFICATE,
+    trainingCertificates: TRAINING_CERTIFICATES,
+    militaryRecord: MILITARY_RECORD,
+    portfolioItems: PORTFOLIO_ITEMS,
+    activeSection,
+    onOpenDocument: openDocument,
+    onOpenPortfolio: setSelectedPortfolioItem,
+    onScrollToSection: scrollToSection
   };
 
   return (
@@ -74,32 +202,19 @@ function App() {
       <button
         type="button"
         className="theme-toggle-btn"
-        onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        onClick={() => setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"))}
         aria-label={theme === "dark" ? "라이트 모드로 변경" : "다크 모드로 변경"}
-        title={theme === "dark" ? "라이트 모드" : "다크 모드"}
       >
         {theme === "dark" ? "LIGHT" : "DARK"}
       </button>
 
-      <main>
-        {/* 랜딩(이력/학력/기술스택/자격증/병역) */}
-        <ResumeSection
-          profile={PROFILE}
-          experience={EXPERIENCE}
-          stack={STACK}
-          certificates={CERTIFICATES}
-          languageCertificate={LANGUAGE_CERTIFICATE}
-          trainingCertificates={TRAINING_CERTIFICATES}
-          militaryRecord={MILITARY_RECORD}
-          onOpenDocument={openDocument}
-        />
-        {/* 자기소개 본문 */}
-        <RecordsSection profileContent={PROFILE_CONTENT} onOpenDocument={openDocument} />
-        {/* 프로젝트 목록 + 상세 케이스 모달 */}
-        <PortfolioGridSection items={PORTFOLIO_ITEMS} onOpenDocument={openDocument} />
-      </main>
+      {isMobile ? <PortfolioMobile {...layoutProps} /> : <PortfolioDesktop {...layoutProps} />}
 
-      {/* 이미지 문서 뷰어 모달 */}
+      <PortfolioModal
+        item={selectedPortfolioItem}
+        onClose={() => setSelectedPortfolioItem(null)}
+        onOpenDocument={openDocument}
+      />
       <DocumentModal document={openedDocument} onClose={() => setOpenedDocument(null)} />
     </>
   );
