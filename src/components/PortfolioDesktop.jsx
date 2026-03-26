@@ -102,11 +102,11 @@ function PortfolioDesktop({
             <div className="portfolio-hero__copy">
               <p className="portfolio-eyebrow">{profile.role}</p>
               <h1 className="portfolio-hero__title">
-                문제를 구조화해
+                문제를 분해합니다.
                 <br />
-                <span>실행 가능한 가치</span>
+                <span>그리고</span>
                 <br />
-                로 연결합니다.
+                문제를 해결합니다.
               </h1>
               <p className="portfolio-hero__summary">{profile.summary}</p>
               <div className="portfolio-hero__details" aria-label="기본 정보">
